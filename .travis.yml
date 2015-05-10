@@ -1,0 +1,15 @@
+sudo: false
+
+language: C
+
+install:
+  - uname -a
+  - git clone -b devel git://github.com/Araq/Nim.git; cd Nim; git clone -b devel --depth 1 git://github.com/nim-lang/csources; cd csources && sh build.sh; cd ..; bin/nim c koch; ./koch boot -d:release; cd ..
+before_script:
+  - export PATH=`pwd`/Nim/bin:$PATH
+script:
+  - set -e
+  - set -x
+  - nim c -r tests/all.nim
+notifications:
+  email: false
